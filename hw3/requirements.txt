@@ -1,0 +1,9 @@
+sentencepiece
+segtok
+ipykernel
+jupyter
+tqdm
+torch
+torchvision
+torchaudio
+numpy
