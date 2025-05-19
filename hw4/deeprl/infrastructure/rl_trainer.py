@@ -258,6 +258,12 @@ class RL_Trainer(object):
         observations.
         """
         paths = paths
+        for path in paths:
+            # print(paths[0])
+            observation = path["observation"]
+            with torch.no_grad():
+               action = expert_policy.get_action(observation)
+            path["action"] = action
         """
         END CODE
         """
