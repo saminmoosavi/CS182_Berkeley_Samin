@@ -89,7 +89,7 @@ class PGAgent(BaseAgent):
             """
             TODO: compute advantage estimates using q_values and baselines
             """
-            advantages = None
+            advantages = q_values - baselines
             """
             END CODE
             """
@@ -130,7 +130,8 @@ class PGAgent(BaseAgent):
         TODO: Return a numpy array containing the returns for this trajectory.
         All entries in this array should be identical.
         """
-        discounted_returns = None
+        discounted_returns = sum(self.gamma**t*r for t,r in enumerate(rewards))
+        list_of_discounted_returns = np.full(len(rewards), discounted_returns)
         """
         END CODE
         """
@@ -149,7 +150,11 @@ class PGAgent(BaseAgent):
         indices [t, T] instead of [0, T].
         Using a for loop is fine, no need to vectorize this (though you can).
         """
-        list_of_discounted_cumsums = None
+        T = len(rewards)
+        list_of_discounted_cumsums = np.zeros(len(rewards))
+        for t in range(len(rewards)):
+            list_of_discounted_cumsums[t] = sum(self.gamma**t_*r for t_,r in enumerate(rewards[t:T]))
+
         """
         END CODE
         """

@@ -185,7 +185,9 @@ class MLPPolicyPG(MLPPolicy):
         """
         TODO: compute the policy gradient given already compute advantages adv_n
         """
-        loss = None
+        dist = self.forward(observations)
+        log_prob = dist.log_prob(actions)       
+        loss = -(log_prob * adv_n).mean()
         """
         END CODE
         """
@@ -201,7 +203,8 @@ class MLPPolicyPG(MLPPolicy):
             TODO: update the baseline value function by regressing to the values
             Hint: see self.baseline_loss for the appropriate loss
             """
-            baseline_loss = None
+            pred = self.baseline(observations)
+            baseline_loss = self.baseline_loss(pred.squeeze(),targets_n)
             """
             END CODE
             """
